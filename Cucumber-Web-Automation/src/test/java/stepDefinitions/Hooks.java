@@ -25,11 +25,11 @@ public class Hooks {
         testContextSetup.testBase.WebDriverManager().quit();
     }
 
-    @AfterStep
+    /*@AfterStep
     public void takeScreenshot(Scenario scenario) throws IOException {
         WebDriver driver = testContextSetup.testBase.WebDriverManager();
         File sourcePath = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         byte[] fileContent = FileUtils.readFileToByteArray(sourcePath);
         scenario.attach(fileContent,"image/png","image");
-    }
+    }*/
 }
