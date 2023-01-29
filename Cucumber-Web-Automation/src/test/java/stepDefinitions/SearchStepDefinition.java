@@ -2,7 +2,9 @@ package stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import pageObjects.SearchPage;
 import utils.TestContextSetup;
 
@@ -37,7 +39,53 @@ public class SearchStepDefinition {
 
     @And("user type origin {string}")
     public void user_type_origin(String origin){
-        searchPage.selectOrigin(origin);
+        searchPage.sendOrigin(origin);
     }
+
+    @And("user select destination origin {string}")
+    public void user_select_destination_origin(String origin){
+        searchPage.selectAutocompleteOption(origin);
+    }
+
+    @And("user type destination {string}")
+    public void user_type_destination(String destination){
+        searchPage.sendDestination(destination);
+    }
+
+    @And("user select destination {string}")
+    public void user_select_destination(String destination){
+        searchPage.selectAutocompleteOption(destination);
+    }
+
+    @And("user select departure field")
+    public void user_select_departure_field(){
+        searchPage.selectDepartureField();
+    }
+
+    @And("user select departure date {string}")
+    public void user_select_departure_date(String departureDate){
+        searchPage.selectDateOfTravel(departureDate);
+    }
+
+    @And("user select return date {string}")
+    public void user_select_return_date(String returnDate){
+        searchPage.selectDateOfTravel(returnDate);
+    }
+
+    @And("user select search button")
+    public void user_select_search_button(){
+        searchPage.selectSearchBtn();
+    }
+
+    @Then("title of available flights page is displayed")
+    public void title_of_select_flight_displayed(){
+        Assert.assertEquals("title is not displayed","Choose a departure flight\nChoose a departure flight",searchPage.getTitleFlightOffers());
+    }
+
+    @And("user should see available flight list")
+    public void user_should_see_departure_flight_list(){
+        Assert.assertTrue("list of departure flight is not present",searchPage.verifyDepartureFlightList());
+    }
+
 
 }

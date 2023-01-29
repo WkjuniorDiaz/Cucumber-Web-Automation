@@ -42,6 +42,30 @@ public class SearchPage {
     @FindBy(id = "txtInputOrigin_field")
     WebElement originField;
 
+    @FindBy(id = "listAutoComplete")
+    WebElement listAutomcomplete;
+
+    @FindBys(@FindBy(xpath = "//div[@class='sc-fepxGN dXkMZp']"))
+    List<WebElement> listAutocompleteOptions;
+
+    @FindBy(id = "txtInputDestination_field")
+    WebElement destinationField;
+
+    @FindBy(id = "departureDate")
+    WebElement departureField;
+
+    @FindBys(@FindBy(xpath = "//td[contains(@class,'CalendarDay')]"))
+    List<WebElement> listDateOption;
+
+    @FindBy(id = "btnSearchCTA")
+    WebElement searchBtn;
+
+    @FindBy(id = "titleSelectFlightDesktop")
+    WebElement flightOffersTitle;
+
+    @FindBy(xpath = "//ol[@aria-label='Available flights.']")
+    WebElement flightOption;
+
 
 
     public SearchPage(WebDriver driver){
@@ -77,22 +101,58 @@ public class SearchPage {
     }
 
     public void selectOriginField(){
-        System.out.println("**");
         originField.click();
-        try {
-            Thread.sleep(5000);
-        }catch (Exception e){
-        }
     }
 
-    public void selectOrigin(String origin){
+    public void sendOrigin(String origin){
         originField.sendKeys(origin);
-
-        try {
-            Thread.sleep(5000);
-        }catch (Exception e){
-        }
-
-        System.out.println("--");
     }
+
+    public void selectAutocompleteOption(String origin){
+        wait.until(ExpectedConditions.visibilityOfAllElements(listAutocompleteOptions));
+        for (WebElement currentElement:listAutocompleteOptions) {
+            if (currentElement.getText().toLowerCase().contains(origin.toLowerCase())) {
+                currentElement.click();
+            }
+        }
+    }
+
+    public void sendDestination(String destination){
+        destinationField.sendKeys(destination);
+    }
+
+    public void selectDepartureField(){
+        departureField.click();
+    }
+
+    public void selectDateOfTravel(String date){
+       for (int i = 0; i < listDateOption.size(); i++){
+            if (listDateOption.get(i).getAttribute("aria-label").contains(date)){
+                listDateOption.get(i).click();
+                break;
+            }
+        }
+    }
+
+    public void selectSearchBtn(){
+        searchBtn.click();
+    }
+
+    public String getTitleFlightOffers(){
+        wait.until(ExpectedConditions.visibilityOf(flightOffersTitle));
+
+        return  flightOffersTitle.getText();
+    }
+
+    public boolean verifyDepartureFlightList(){
+        boolean isListPresent = false;
+
+        isListPresent = flightOption.isDisplayed();
+
+        return isListPresent;
+
+    }
+
+
+
 }
