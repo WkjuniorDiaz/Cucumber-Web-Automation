@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
         features = "src/test/java/features",
         glue = {"stepDefinitions"},
         monochrome = true,
+        tags = "@Search",
         plugin = {
                 "pretty",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:.",
