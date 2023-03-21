@@ -3,6 +3,7 @@ package utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.FileInputStream;
@@ -22,8 +23,11 @@ public class TestBase {
 
         if (driver == null){
             if (prop.getProperty("browser").equalsIgnoreCase("chrome")){
+                ChromeOptions option = new ChromeOptions();
+                option.addArguments("--remote-allow-origins=*");
+
                 WebDriverManager.chromedriver().setup();
-                this.driver = new ChromeDriver();
+                this.driver = new ChromeDriver(option);
             }
 
             if (prop.getProperty("browser").equalsIgnoreCase("firefox")){

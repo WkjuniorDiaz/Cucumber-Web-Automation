@@ -87,5 +87,20 @@ public class SearchStepDefinition {
         Assert.assertTrue("list of departure flight is not present",searchPage.verifyDepartureFlightList());
     }
 
+    @Given("user search for a flight with origin {string}, destination {string}, departure date {string} and return date {string}")
+    public void searchFlight(String origin, String destination, String departureDate, String returnDate){
+        searchPage.selectOriginField();
+        searchPage.sendOrigin(origin);
+        searchPage.selectAutocompleteOption(origin);
+        searchPage.sendDestination(destination);
+        searchPage.selectAutocompleteOption(destination);
+        searchPage.selectDepartureField();
+        searchPage.selectDateOfTravel(departureDate);
+        searchPage.selectDateOfTravel(returnDate);
+        searchPage.selectSearchBtn();
+        searchPage.closeSwitchModal();
+        Assert.assertTrue("list of departure flight is not present",searchPage.verifyDepartureFlightList());
+    }
+
 
 }
