@@ -45,7 +45,7 @@ public class SearchPage {
     @FindBy(id = "listAutoComplete")
     WebElement listAutomcomplete;
 
-    @FindBys(@FindBy(xpath = "//div[@class='sc-fepxGN dXkMZp']"))
+    @FindBys(@FindBy(xpath = "//button[contains(@id,'btnItemAutoComplete')]"))
     List<WebElement> listAutocompleteOptions;
 
     @FindBy(id = "txtInputDestination_field")
@@ -63,8 +63,11 @@ public class SearchPage {
     @FindBy(id = "titleSelectFlightDesktop")
     WebElement flightOffersTitle;
 
-    @FindBy(xpath = "//ol[@aria-label='Available flights.']")
-    WebElement flightOption;
+    @FindBy(id   = "WrapperCardFlight0")
+    WebElement listAvailableFlights;
+
+    @FindBy(id = "progress-icon")
+    WebElement progress;
 
 
 
@@ -110,14 +113,15 @@ public class SearchPage {
 
     public void selectAutocompleteOption(String origin){
         wait.until(ExpectedConditions.visibilityOfAllElements(listAutocompleteOptions));
-        for (WebElement currentElement:listAutocompleteOptions) {
-            if (currentElement.getText().toLowerCase().contains(origin.toLowerCase())) {
-                currentElement.click();
+        for (int i = 0; i<listAutocompleteOptions.size(); i++){
+            if (listAutocompleteOptions.get(i).getText().toLowerCase().contains(origin.toLowerCase())){
+                listAutocompleteOptions.get(i).click();
             }
         }
     }
 
     public void sendDestination(String destination){
+        wait.until(ExpectedConditions.invisibilityOf(progress));
         destinationField.sendKeys(destination);
     }
 
@@ -147,7 +151,7 @@ public class SearchPage {
     public boolean verifyDepartureFlightList(){
         boolean isListPresent = false;
 
-        isListPresent = flightOption.isDisplayed();
+        isListPresent = listAvailableFlights.isDisplayed();
 
         return isListPresent;
 
